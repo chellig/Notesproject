@@ -1,0 +1,100 @@
+<template>
+  <section class="section-add">
+    <div class="container">
+      <div class="row g-4 g-lg-0 align-items-center">
+  
+        <div class="col-md-6 align-items-center text-center">
+          <!-- Image -->
+          <img src="@/assets/images/element/contact.svg" class="h-400px" alt="">
+  
+          <!-- Social media button -->
+          <div class="d-sm-flex align-items-center justify-content-center mt-2 mt-sm-4">
+            <h5 class="mb-0">Follow us on:</h5> 
+            <ul class="list-inline mb-0 ms-sm-2">
+              <li class="list-inline-item"> <a class="fs-5 me-1 text-facebook" href="#"><i class="fab fa-fw fa-facebook-square"></i></a> </li>
+              <li class="list-inline-item"> <a class="fs-5 me-1 text-instagram" href="#"><i class="fab fa-fw fa-instagram"></i></a> </li>
+              <li class="list-inline-item"> <a class="fs-5 me-1 text-twitter" href="#"><i class="fab fa-fw fa-twitter"></i></a> </li>
+              <li class="list-inline-item"> <a class="fs-5 me-1 text-linkedin" href="#"><i class="fab fa-fw fa-linkedin-in"></i></a> </li>
+              <li class="list-inline-item"> <a class="fs-5 me-1 text-dribbble" href="#"><i class="fas fa-fw fa-basketball-ball"></i></a> </li>
+              <li class="list-inline-item"> <a class="fs-5 me-1 text-pinterest" href="#"><i class="fab fa-fw fa-pinterest"></i></a> </li>
+            </ul>
+          </div>
+        </div>
+  
+        <!-- Contact form START -->
+        <div class="col-md-6">
+          <!-- Title -->
+          <h2 class="mt-4 mt-md-0">Ajout enseignant</h2>          
+    <form @submit.prevent="addenseignant">
+      <div class="row">
+        <div class="col-md-6">
+          <label for="nom" class="form-label">Nom</label>
+          <input type="text" class="form-control" id="nom" v-model="enseignant.nom">
+        </div>
+        <div class="col-md-6 ms-auto">
+          <label for="prenom" class="form-label">Prénom</label>
+          <input type="text" class="form-control" id="prenom" v-model="enseignant.prenom">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 ms-auto">
+          <label for="email" class="form-label">Email</label>
+          <input type="text" class="form-control" id="email" v-model="enseignant.email">
+        </div>
+        <div class="col-md-6">
+          <label for="adresse" class="form-label">Adresse</label>
+          <input type="text" class="form-control" id="adresse" v-model="enseignant.adresse">
+        </div>
+       
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <label for="télephone" class="form-label">Téléphone</label>
+          <input type="text" class="form-control" id="télephone" v-model="enseignant.télephone">
+        </div>
+      </div>
+      <br />
+      <button type="submit" class="btn btn-outline-primary">
+        <i class="fa-solid fa-floppy-disk"></i> Enregister
+      </button>
+      <router-link to="/enseignant" class="btn btn-outline-danger mx-2">
+        <i class="fa-solid fa-xmark"></i> Retour
+      </router-link>
+    </form>
+        </div>
+        <!-- Contact form END -->
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup>
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+const router = useRouter();
+import axios from "axios";
+
+const enseignant = ref({
+  nom: "",
+  prenom: "",
+  email: "",
+  adresse: "",
+  télephone: "",
+});
+
+const addenseignant = async () => {
+try {
+  await axios.post("http://localhost:8000/api/enseignants/", enseignant.value);
+  router.push({ name: 'enseignant' });
+} catch (error) {
+  console.error("Erreur lors de l'ajout d'étudiant :", error.response.data);
+}
+};
+
+</script>
+
+<style scoped>
+.section-add{
+  padding-top:150px !important;
+ }
+</style>
